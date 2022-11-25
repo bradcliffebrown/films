@@ -3,12 +3,16 @@
 
 <!-- Load d3.js -->
 <script src="https://d3js.org/d3.v6.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
 <h1>Films</h1>
 <!-- Create a div where the graph will take place -->
+<div id="my_dataviz2"></div>
 <div id="my_dataviz"></div>
 
 <script>
+  const keys = ['Drama', 'Action', 'Comedy', 'Western', 'Fantasy', 'Crime', 'War', 'Romantic', 'Spy', 'Adventure', 'Musical', 'Thriller', 'Super-hero', 'Biography', 'Sport', 'History', 'Documentary']
+  const colorScale1 = ["#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#bc80bd", "#ccebc5", "#ffed6f", "#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69"]
   // set the dimensions and margins of the graph
   const margin = { top: 10, right: 30, bottom: 30, left: 60 },
     width = 460 - margin.left - margin.right,
@@ -42,8 +46,8 @@
       .call(d3.axisLeft(y));
 
     const color = d3.scaleOrdinal()
-      .domain(['Drama', 'Action', 'Comedy', 'Western', 'Fantasy', 'Crime', 'War', 'Romantic', 'Spy', 'Adventure', 'Musical', 'Thriller', 'Super-hero', 'Biography', 'Sport', 'History', 'Documentary'])
-      .range(["#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#bc80bd", "#ccebc5", "#ffed6f", "#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69"])
+      .domain(keys)
+      .range(colorScale1)
     
     const tooltip = d3.select("#my_dataviz")
       .append("div")
@@ -125,5 +129,30 @@
       .duration(300)
       .attr("cx", function (d) { return x(d.Rating); })
       .attr("cy", function (d) { return y(d.Effort); })
+    
+    // select the svg area
+const Svg = d3.select("#my_dataviz2")
+
+// Add one dot in the legend for each name.
+Svg.selectAll("mydots")
+  .data(keys)
+  .enter()
+  .append("circle")
+    .attr("cx", 100)
+    .attr("cy", function(d,i){ return 100 + i*25}) // 100 is where the first dot appears. 25 is the distance between dots
+    .attr("r", 7)
+    .style("fill", function(d){ return color(d)})
+
+// Add one dot in the legend for each name.
+Svg.selectAll("mylabels")
+  .data(keys)
+  .enter()
+  .append("text")
+    .attr("x", 120)
+    .attr("y", function(d,i){ return 100 + i*25}) // 100 is where the first dot appears. 25 is the distance between dots
+    .style("fill", function(d){ return color(d)})
+    .text(function(d){ return d})
+    .attr("text-anchor", "left")
+    .style("alignment-baseline", "middle")
   })
 </script>

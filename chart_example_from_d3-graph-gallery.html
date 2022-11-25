@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v6.js"></script>
+
+<h1>Films</h1>
+<!-- Create a div where the graph will take place -->
+<div id="my_dataviz"></div>
+
+<script>
+  // set the dimensions and margins of the graph
+  const margin = { top: 10, right: 30, bottom: 30, left: 60 },
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+  // append the svg object to the body of the page
+  const svg = d3.select("#my_dataviz")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", `translate(${margin.left}, ${margin.top})`)
+
+  //Read the data
+  d3.csv("https://raw.githubusercontent.com/bradcliffebrown/films/main/Films%20-%20Combined.csv").then(function (data) {
+
+    // Add X axis
+    const x = d3.scaleLinear()
+      .domain([0, 0])
+      .range([0, width]);
+    svg.append("g")
+      .attr("class", "myXaxis")   // Note that here we give a class to the X axis, to be able to call it later and modify it
+      .attr("transform", `translate(0, ${height})`)
+      .call(d3.axisBottom(x))
+      .attr("opacity", "0")
+
+    // Add Y axis
+    const y = d3.scaleLinear()
+      .domain([0, 10])
+      .range([height, 0]);
+    svg.append("g")
+      .call(d3.axisLeft(y));
+
+    const color = d3.scaleOrdinal()
+      .domain(['Drama', 'Action', 'Comedy', 'Western', 'Fantasy', 'Crime', 'War', 'Romantic', 'Spy', 'Adventure', 'Musical', 'Thriller', 'Super-hero', 'Biography', 'Sport', 'History', 'Documentary'])
+      .range(["#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#bc80bd", "#ccebc5", "#ffed6f", "#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69"])
+    
+    const tooltip = d3.select("#my_dataviz")
+      .append("div")
+      .style("opacity", 0)
+      .attr("class", "tooltip")
+      .style("background-color", "white")
+      .style("border", "solid")
+      .style("border-width", "1px")
+      .style("border-radius", "5px")
+      .style("padding", "10px")
+    // Highlight the specie that is hovered
+    const highlight = function (event, d){
+
+      selected_specie = d.Genre
+
+      d3.selectAll(".dot")
+        .transition()
+        .duration(200)
+        .style("fill", "lightgrey")
+        .attr("r", 3)
+
+      d3.selectAll("." + selected_specie)
+        .transition()
+        .duration(200)
+        .style("fill", color(selected_specie))
+        .attr("r", 7)
+
+      tooltip
+        .style("opacity", 1)
+    }
+
+    // Highlight the specie that is hovered
+    const doNotHighlight = function (event,d){
+      d3.selectAll(".dot")
+        .transition()
+        .duration(200)
+        .style("fill", d => color(d.Genre))
+        .attr("r", 5)
+      
+      tooltip
+        .transition()
+        .duration(200)
+        .style("opacity", 0)
+    }
+
+    const showTitle = function(event, d) {
+      tooltip
+        .html(`The Rating for ${d.Name} is: ${d.Rating}`)
+        .style("left", (event.x)/2 + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+        .style("top", (event.y)/2 + "px")
+    }
+
+    // Add dots
+    svg.append('g')
+      .selectAll("dot")
+      .data(data)
+      .enter()
+      .append("circle")
+        .attr("class", function (d) { return "dot " + d.Genre } )
+        .attr("cx", function (d) { return x(d.Rating); })
+        .attr("cy", function (d) { return y(d.Effort); })
+        .attr("r", 5)
+        .style("fill", function (d) { return color(d.Genre) })
+      .on("mouseover", highlight)
+      .on("mousemove", showTitle)
+      .on("mouseleave", doNotHighlight)
+
+    // new X axis
+    x.domain([0, 10])
+    svg.select(".myXaxis")
+      .transition()
+      .duration(300)
+      .attr("opacity", "1")
+      .call(d3.axisBottom(x));
+
+    svg.selectAll("circle")
+      .transition()
+      .delay(function (d, i) { return (i * 3) })
+      .duration(300)
+      .attr("cx", function (d) { return x(d.Rating); })
+      .attr("cy", function (d) { return y(d.Effort); })
+  })
+</script>

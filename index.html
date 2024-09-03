@@ -14,6 +14,14 @@
   <header>
     <h1>Films</h1>
   </header>
+  
+  <!-- Initial Image Section -->
+  <section class="initial-image">
+    <div class="overlay">
+      <h2>Statecraft</h2>
+    </div>
+  </section>
+
   <main>
     <section aria-labelledby="section1-title">
       <h2 id="section1-title">Next Section</h2>
@@ -46,7 +54,7 @@
     .attr("transform", `translate(${margin.left}, ${margin.top})`)
 
   //Read the data
-  d3.csv("https://raw.githubusercontent.com/bradcliffebrown/films/main/Films%20-%20Combined.csv").then(function (data) {
+  d3.csv("data/main.csv").then(function (data) {
 
     // Add X axis
     const x = d3.scaleLinear()

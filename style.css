@@ -1,12 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@1,600&display=swap');
 
-body{
+body {
     background-color: #131316;
     color: #ffffff;
     font-family: 'Spectral', serif;
     padding: 0;
     margin: 0;
-
 }
 
 section {
@@ -16,20 +15,18 @@ section {
     min-height: 100vh;
 }
 
-
-h1 {
+h1, h2 {
     font-family: 'Spectral', serif;
 }
-
 
 .hidden {
     opacity: 0;
     filter: blur(5px);
-    translate: translateX(-100%);
+    transform: translateX(-100%);
     transition: all 1s;
 }
 
-@media(prefers-reduced-motion) {
+@media (prefers-reduced-motion) {
     .hidden {
         transition: none;
     }
@@ -39,4 +36,13 @@ h1 {
     opacity: 1;
     filter: blur(0);
     transform: translateX(0);
+}
+
+a, button {
+    outline: none;
+    transition: box-shadow 0.3s;
+}
+
+a:focus, button:focus {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
 }

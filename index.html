@@ -1,29 +1,34 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
+<html lang="en">
 <head>
-  <!-- Load d3.js -->
-  <script src="https://d3js.org/d3.v6.js"></script>
-  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Films</title>
   <link rel="icon" type="image/x-icon" href="https://www.pngall.com/wp-content/uploads/13/Movie-No-Background.png">
-  <link rel="stylesheet" href="style.css"></link>
-  <link src="app.js"></link>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://d3js.org/d3.v6.js"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <script defer src="app.js"></script>
 </head>
-<section class="hidden">
-  <h1>Films</h1>
-</section>
-<section class="hidden">
-  <div>Next Section</div>
-  <div> 
-    <svg id="my_dataviz2" height=300 width=450></svg>
-  </div>
-  <div id="my_dataviz"></div>
-</section>
-<section class="hidden">
-  <h2>Next Section</h2>
-  <div></div>
-</section>
-
+<body>
+  <header>
+    <h1>Films</h1>
+  </header>
+  <main>
+    <section aria-labelledby="section1-title">
+      <h2 id="section1-title">Next Section</h2>
+      <div> 
+        <svg id="my_dataviz2" height="300" width="450" role="img" aria-label="Film genres legend"></svg>
+      </div>
+      <div id="my_dataviz" role="img" aria-label="Film ratings and efforts scatter plot"></div>
+    </section>
+    <section aria-labelledby="section2-title">
+      <h2 id="section2-title">Next Section</h2>
+      <div></div>
+    </section>
+  </main>
+</body>
+</html>
 
 <script>
   const keys = ['Thriller', 'Family', 'Romantic', 'Comedy', 'Drama', 'Fiction', 'Docu-Drama', 'Action']

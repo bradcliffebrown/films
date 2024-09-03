@@ -9,7 +9,7 @@ body {
 }
 
 .initial-image {
-    background-image: url('images/your-image.jpg'); /* Replace with your image path */
+    background-image: url('images/bg.jpg'); /* Replace with your image path */
     background-size: cover;
     background-position: center;
     height: 100vh; /* Full screen height */

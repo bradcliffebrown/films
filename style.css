@@ -75,3 +75,20 @@ a, button {
 a:focus, button:focus {
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
 }
+
+header {
+    position: fixed; /* Keep the header fixed at the top */
+    left: 10%;
+    top: 0;
+    width: 80%; /* Adjust width as needed */
+    background-color: rgba(44, 62, 80, 0.8); /* Semi-transparent background */
+    transition: background-color 0.5s, font-size 0.5s; /* Smooth transition */
+    z-index: 1000; /* Ensure it stays above other content */
+    padding: 10px; /* Add some padding for better appearance */
+}
+
+header h1 {
+    font-size: 2em; /* Initial font size */
+    transition: font-size 0.5s; /* Smooth transition for font size */
+    color: #ffffff; /* Ensure text color is white for visibility */
+}
